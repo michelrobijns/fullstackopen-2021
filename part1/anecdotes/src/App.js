@@ -12,7 +12,7 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
-  const [points, setPoints] = useState(new Array(anecdotes.length - 1).fill(0));
+  const [points, setPoints] = useState(new Array(anecdotes.length).fill(0));
 
   const selectRandom = () => setSelected(Math.floor(Math.random() * anecdotes.length));
 
@@ -22,12 +22,18 @@ const App = () => {
     setPoints(newPoints);
   }
 
+  const mostVotedIndex = () => points.indexOf(Math.max(...points));
+
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       {anecdotes[selected]}<br />
       has {points[selected]} votes<br />
       <button onClick={vote}>vote</button>
       <button onClick={selectRandom}>next anecdote</button>
+      <h1>Anecdote with most votes</h1>
+      {anecdotes[mostVotedIndex()]}<br />
+      has {points[mostVotedIndex()]} votes
     </div>
   );
 }
