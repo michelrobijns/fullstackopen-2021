@@ -7,9 +7,10 @@ const Header = ({ course }) => {
 }
 
 const Total = ({ course }) => {
-  const sum = course.parts[0].exercises + course.parts[1].exercises + course.parts[2].exercises
-  return(
-    <p>Number of exercises {sum}</p>
+  const sum = course.parts.map(part => part.exercises).reduce((a, b) => a + b);
+
+  return (
+    <p><strong>total of {sum} exercises</strong></p>
   )
 }
 
@@ -50,8 +51,8 @@ const App = () => {
         id: 3
       },
       {
-        name: 'Event handlers',
-        exercises: 8,
+        name: 'Redux',
+        exercises: 11,
         id: 4
       }
     ]
@@ -61,6 +62,7 @@ const App = () => {
     <div>
       <Header course={course} />
       <Content course={course} />
+      <Total course={course} />
     </div>
   )
 }
