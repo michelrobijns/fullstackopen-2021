@@ -10,8 +10,21 @@ const Search = ({ searchText, searchTextChangeHander}) => {
 }
 
 const Country = ({ country }) => {
+  const [show, setShow] = useState(false);
+
+  if (show) {
+    return (
+      <div>
+        {country.name} <button onClick={() => setShow(!show)}>hide</button>
+        <CountryDetail country={country} />
+      </div>
+    )
+  }
+
   return (
-    <>{country.name}<br /></>
+    <div>
+      {country.name} <button onClick={() => setShow(!show)}>show</button>
+    </div>
   );
 }
 
