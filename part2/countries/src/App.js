@@ -29,6 +29,35 @@ const Country = ({ country }) => {
 }
 
 const CountryDetail = ({ country }) => {
+  const [weather, setWeather] = useState({});
+
+  useEffect(() => {
+    axios
+      .get(`http://api.weatherstack.com/current?access_key=${process.env.REACT_APP_API_KEY}&query=${country.capital}`)
+      .then(response => {
+        setWeather(response.data);
+      })
+  }, []);
+
+  if (weather.current) {
+    return (
+      <div>
+        <h1>{country.name}</h1>
+        capital {country.capital}<br />
+        population {country.population}
+        <h2>languages</h2>
+        <ul>
+          {country.languages.map(language => <li key={language.iso639_1}>{language.name}</li>)}
+        </ul>
+        <img src={country.flag} alt={`Flag of ${country.name}`} />
+        <h2>Weather in {country.capital}</h2>
+        <strong>temperature:</strong> {weather.current.temperature} Celcius<br />
+        <img src={weather.current.weather_icons} alt={`Weather in ${country.capital}`} /><br />
+        <strong>wind:</strong>{weather.current.wind_speed} km/h direction {weather.current.wind_dir}
+      </div>
+    );
+  }
+
   return (
     <div>
       <h1>{country.name}</h1>
