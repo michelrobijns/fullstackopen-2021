@@ -121,6 +121,9 @@ const App = () => {
         .remove(person.id)
         .then(() => {
           setPersons(persons.filter(p => p.id !== person.id));
+        })
+        .catch(error => {
+          showNotification(`Information of ${person.name} has already been removed from the server`, 'errorMessage', 3000);
         });
     }
   }
