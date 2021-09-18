@@ -37,11 +37,24 @@ const Person = ({ person, handleDelete }) => {
   );
 }
 
+const Notificaton = ({ message, messageType }) => {
+  if (message === null) {
+    return null
+  }
+
+  return (
+    <div className={message.type}>
+      {message.text}
+    </div>
+  );
+}
+
 const App = () => {
   const [persons, setPersons] = useState([]);
-  const [ newName, setNewName ] = useState('');
-  const [ newNumber, setNewNumber ] = useState('');
-  const [ filterText, setFilterText ] = useState('');
+  const [newName, setNewName] = useState('');
+  const [newNumber, setNewNumber] = useState('');
+  const [filterText, setFilterText] = useState('');
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     personService
@@ -50,6 +63,13 @@ const App = () => {
         setPersons(response.data);
       });
   }, []);
+
+  const showNotification = (text, type, duration) => {
+    setMessage({ text, type })
+    setTimeout(() => {
+      setMessage(null);
+    }, duration);
+  };
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -67,6 +87,7 @@ const App = () => {
               setPersons(persons.map(p => p.id !== existingPerson.id ? p : response.data));
               setNewName('');
               setNewNumber('');
+              showNotification(`Updated ${response.data.name}`, 'successMessage', 3000);
             });
         }
       }
@@ -77,6 +98,7 @@ const App = () => {
           setPersons(persons.concat(response.data));
           setNewName('');
           setNewNumber('');
+          showNotification(`Added ${response.data.name}`, 'successMessage', 3000);
         });
     }
   }
@@ -108,6 +130,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notificaton message={message} />
       <Filter filterText={filterText} handleFilterChange={handleFilterChange} />
       <h3>add a new</h3>
       <PersonForm addPerson={addPerson} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} />
