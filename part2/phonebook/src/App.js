@@ -88,6 +88,9 @@ const App = () => {
               setNewName('');
               setNewNumber('');
               showNotification(`Updated ${response.data.name}`, 'successMessage', 3000);
+            })
+            .catch(error => {
+              showNotification(error.response.data.error, 'errorMessage', 3000);
             });
         }
       }
@@ -99,6 +102,9 @@ const App = () => {
           setNewName('');
           setNewNumber('');
           showNotification(`Added ${response.data.name}`, 'successMessage', 3000);
+        })
+        .catch(error => {
+          showNotification(error.response.data.error, 'errorMessage', 3000);
         });
     }
   }
