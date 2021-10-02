@@ -5,8 +5,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "jest --verbose"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -16,6 +16,10 @@
   },
   "devDependencies": {
     "eslint": "^7.32.0",
+    "jest": "^27.2.4",
     "nodemon": "^2.0.13"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
