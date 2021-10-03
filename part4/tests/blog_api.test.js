@@ -21,6 +21,16 @@ describe('when there is initially some blogs saved', () => {
       .expect(200)
       .expect('Content-Type', /application\/json/)
   })
+
+  test('the correct amount of blogs is returned', async () => {
+    const currentBlogs = await helper.blogsInDb()
+    expect(currentBlogs.length).toEqual(2)
+  })
+
+  test('unique identifier property is named id', async () => {
+    const currentBlogs = await helper.blogsInDb()
+    expect(currentBlogs[0].id).toBeDefined()
+  })
 })
 
 afterAll(() => {
