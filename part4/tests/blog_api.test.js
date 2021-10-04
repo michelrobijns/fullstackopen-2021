@@ -33,6 +33,30 @@ describe('when there is initially some blogs saved', () => {
   })
 })
 
+describe('making an HTTP POST request to the /api/blogs url', () => {
+  test('successfully creates a new blog post', async () => {
+    const newBlog = {
+      title: 'Test Blog Post Title',
+      author: 'Yours Truly',
+      url: 'https://example.com',
+      likes: 3
+    }
+
+    const addedBlog = await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+
+    const blogsAfterAdd = await helper.blogsInDb()
+    expect(blogsAfterAdd).toHaveLength(helper.initialBlogs.length + 1)
+
+    delete addedBlog.body.id
+
+    expect(addedBlog.body).toEqual(newBlog)
+  })
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
