@@ -1,32 +1,30 @@
-import React from 'react';
+import React from 'react'
 
-const Header = (props) => {
-  return (
-    <h1>{props.course.name}</h1>
-  )
-}
+const Header = (props) => (
+  <h1>{props.course.name}</h1>
+)
 
-const Part = (props) => {
-  return (
-    <p>
-      {props.part} {props.exercises}
-    </p>
-  )
-}
+const Part = (props) => (
+  <p>{props.part.name} {props.part.exercises}</p>
+)
 
 const Content = (props) => {
   return (
     <>
-      <Part part={props.course.parts[0].name} exercises={props.course.parts[0].exercises} />
-      <Part part={props.course.parts[1].name} exercises={props.course.parts[1].exercises} />
-      <Part part={props.course.parts[2].name} exercises={props.course.parts[2].exercises} />
+      <Part part={props.course.parts[0]} />
+      <Part part={props.course.parts[1]} />
+      <Part part={props.course.parts[2]} />
     </>
   )
 }
 
 const Total = (props) => {
+  const total = props.course.parts.reduce((previous, current) => {
+    return previous + current.exercises
+  }, 0)
+
   return (
-    <p>Number of exercises {props.course.parts[0].exercises + props.course.parts[1].exercises + props.course.parts[2].exercises}</p>
+    <p>Number of exercises {total}</p>
   )
 }
 
@@ -50,11 +48,11 @@ const App = () => {
   }
 
   return (
-    <div>
+    <>
       <Header course={course} />
       <Content course={course} />
       <Total course={course} />
-    </div>
+    </>
   )
 }
 
