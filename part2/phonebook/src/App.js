@@ -43,7 +43,7 @@ const App = () => {
             showNotification(`Updated ${updatedPerson.name}`, 'success', 5000)
           })
           .catch(error => {
-            showNotification(error.response.data.error, 'errorMessage', 5000);
+            showNotification(error.response.data.error, 'error', 5000);
           });
       }
     } else {
@@ -56,7 +56,7 @@ const App = () => {
           showNotification(`Added ${addedPerson.name}`, 'success', 5000)
         })
         .catch(error => {
-          showNotification(error.response.data.error, 'errorMessage', 5000);
+          showNotification(error.response.data.error, 'error', 5000);
         });
     }
   }
